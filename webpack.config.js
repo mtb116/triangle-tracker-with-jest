@@ -4,7 +4,7 @@
 
 const path = require("path");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 //webpack uses a dependency graph - recursively manage our application's assets
@@ -22,13 +22,16 @@ module.exports = {
   },
   plugins: [
     new UglifyJsPlugin({ sourceMap: true }),
-    new CleanWebpackPlugin(["dist"]),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: "Triangle Tracker",
       template: "./src/index.html",
       inject: "body",
     }),
   ],
+  optimization: {
+    minimizer: [new UglifyJsPlugin()],
+  },
   module: {
     rules: [
       {
